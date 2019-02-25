@@ -12,7 +12,7 @@ library(cowplot)
 
 #set root for each tree
 #for (i in 1:length(mammals)){
-#  mammals[[i]]<-root(mammals[[i]], outgroup = "Opossum", resolve.root = TRUE)
+#  mammals[i]<-root(mammals[i], outgroup = "Opossum", resolve.root = TRUE)
 #}
 
 
@@ -103,7 +103,7 @@ server <- function(input, output, session) {
     m <- vector("list", numtrees) #empty vector to hold rooted trees
     
     for (i in 1:numtrees){
-        m[[i]]<-root(trees[[i]], outgroup = input$outgroup, resolve.root = TRUE)
+        m[i]<-root(trees[i], outgroup = input$outgroup, resolve.root = TRUE)
     }
     m
   })
@@ -122,17 +122,17 @@ server <- function(input, output, session) {
     myplots <- vector("list", length(trees))
     
     for (i in 1:length(trees)){
-      mrca <- MRCA(trees[[i]], tip=families())
+      mrca <- getMRCA(trees[[i]], tip=families())
       cladetree <- groupClade(trees[[i]], .node=mrca)
       if(input$brlens == 1){
         myplots[[i]] <- ggtree(cladetree, aes(color=group, linetype=group))+ 
-          geom_tiplab() + 
-          scale_color_manual(values=c("black", "red")) 
+          geom_tiplab() #+ 
+          #scale_color_manual(values=c("black", "red")) 
       }
       else{
         myplots[[i]] <- ggtree(cladetree, aes(color=group, linetype=group), branch.length="none")+ 
-          geom_tiplab() + 
-          scale_color_manual(values=c("black", "red"))
+          geom_tiplab() #+ 
+          #scale_color_manual(values=c("black", "red"))
       }
     }
     myplots
