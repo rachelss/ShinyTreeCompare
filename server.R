@@ -15,6 +15,8 @@ shinyServer(function(input, output, session) {
     
     if (is.null(input$file)){
       #Schwartz et al BMC Bioinf 2015 results
+      
+      #replace species names before returning
       return(read.tree("mammal_raxml_bmc_paper_data/alltrees.tre"))
     }
     else{
